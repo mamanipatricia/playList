@@ -9,6 +9,7 @@ router.post('/', createGenre);
 router.get('/:id', showGenre);
 router.delete('/:id', deleteGenre);
 router.patch('/:id', updateGenre);
+router.get('/:id/songs', displaySongByGenre);
 
 // functions...
 function genreList(req, res, next) {
@@ -45,6 +46,14 @@ function deleteGenre(req, res, next) {
 
 function updateGenre(req, res, next) {
     Controller.updateGenre(req.params.id, req.body.name)
+        .then(response => {
+            res.send(response)
+        })
+        .catch(next);
+}
+
+function displaySongByGenre(req, res, next) {
+    Controller.displaySongByGenre(req.params.id)
         .then(response => {
             res.send(response)
         })

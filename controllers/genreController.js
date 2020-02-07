@@ -1,6 +1,7 @@
 // import { makeSlug } from '../helpers/stringUtil.js';
 const { makeSlug } = require('../helpers/stringUtil')
 const genreModel = require('../models').genre;
+const songModel = require('../models/').song;
 
 async function genreList() {
     return await genreModel.findAll();
@@ -39,6 +40,19 @@ async function updateGenre(id, name) {
     await genre.save()
     return genre;
 }
+// !TODO todas las canciones del genero musical romantico
+
+async function displaySongByGenre(id) {
+    return await genreModel.findByPk(id, {
+        include: [
+            {
+                model: songModel,
+                as: 'songs'
+            }
+        ]
+    })
+}
+
 
 module.exports = {
     genreList,
@@ -46,4 +60,5 @@ module.exports = {
     showGenre,
     deleteGenre,
     updateGenre,
+    displaySongByGenre,
 }
